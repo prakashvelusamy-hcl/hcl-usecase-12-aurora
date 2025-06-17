@@ -35,47 +35,19 @@ resource "aws_instance" "public_instances" {
   #   security_groups = [data.aws_security_group.sg.id]
   security_groups = [aws_security_group.ec2_sg.id]
 
-  user_data = <<-EOF
-              #!/bin/bash
-              apt-get update -y
-              apt-get install -y nginx
-              systemctl start nginx
-              systemctl enable nginx
-              echo "<h1>Hostname: $(hostname)</h1>" > /var/www/html/index.html
-              systemctl reload nginx
-              EOF
+  # user_data = <<-EOF
+  #             #!/bin/bash
+  #             apt-get update -y
+  #             apt-get install -y nginx
+  #             systemctl start nginx
+  #             systemctl enable nginx
+  #             echo "<h1>Hostname: $(hostname)</h1>" > /var/www/html/index.html
+  #             systemctl reload nginx
+  #             EOF
 
   tags = {
     Name = "Public-Instance-${count.index}"
     Environment = "Data_Base_Instance"
   }
-}
-
-resource "aws_iam_role" "app_role" {
-  name = "app-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        },
-        Action = "sts:AssumeRole",
-        Condition = {
-          "StringEquals" = {
-            "aws:ResourceTag/Environment" = "Data_Base_Instance"
-          }
-        }
-      }
-    ]
-  })
-}
-
-
-resource "aws_iam_role_policy_attachment" "attach_secret_policy" {
-  role       = aws_iam_role.app_role.name
-  policy_arn = aws_iam_policy.read_db_secret.arn
 }
 

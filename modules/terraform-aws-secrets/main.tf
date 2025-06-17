@@ -27,3 +27,32 @@ resource "aws_iam_policy" "read_db_secret" {
     ]
   })
 }
+
+
+resource "aws_iam_role" "app_role" {
+  name = "app-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        },
+        Action = "sts:AssumeRole",
+        Condition = {
+          "StringEquals" = {
+            "aws:ResourceTag/Environment" = "Data_Base_Instance"
+          }
+        }
+      }
+    ]
+  })
+}
+
+
+resource "aws_iam_role_policy_attachment" "attach_secret_policy" {
+  role       = aws_iam_role.app_role.name
+  policy_arn = aws_iam_policy.read_db_secret.arn
+}
