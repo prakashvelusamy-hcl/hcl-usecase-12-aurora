@@ -13,6 +13,7 @@ locals {
 resource "aws_iam_policy" "read_db_secret" {
   name        = "ReadDBSecretPolicy"
   description = "Policy to allow read access to Aurora DB secret"
+  secret_arn = data.aws_secretsmanager_secret.db.arn
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
