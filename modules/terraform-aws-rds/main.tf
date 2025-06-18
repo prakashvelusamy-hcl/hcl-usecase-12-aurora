@@ -41,7 +41,6 @@ resource "aws_rds_cluster" "default" {
   vpc_security_group_ids = var.vpc_security_group_id
   db_subnet_group_name   = var.private_subnet_group_name
   skip_final_snapshot    = true
-
 }
 
 
