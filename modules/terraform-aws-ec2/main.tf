@@ -35,7 +35,6 @@ resource "aws_instance" "public_instances" {
   security_groups             = [aws_security_group.ec2_sg.id]
   
   root_block_device {
-    device_name = "/dev/sda1"
     volume_size = 8
     volume_type = "gp3"
     delete_on_termination = true
