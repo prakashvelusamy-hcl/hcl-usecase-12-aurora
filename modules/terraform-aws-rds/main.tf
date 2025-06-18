@@ -30,7 +30,6 @@ resource "aws_iam_policy" "read_db_secret" {
 
 
 resource "aws_rds_cluster" "default" {
-  allocated_storage       = 10
   cluster_identifier      = "aurora-cluster-test"
   engine                  = "aurora-mysql"
   engine_version          = "8.0.mysql_aurora.3.04.0"
