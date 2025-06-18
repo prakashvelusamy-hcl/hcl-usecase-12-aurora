@@ -44,6 +44,16 @@ resource "aws_rds_cluster" "default" {
   db_subnet_group_name   = var.private_subnet_group_name
   skip_final_snapshot    = true
 }
+resource "aws_rds_cluster_instance" "writer" {
+  identifier              = "aurora-cluster-test-instance-1"
+  cluster_identifier      = aws_rds_cluster.default.id
+  instance_class          = "db.t3.medium"
+  engine                  = aws_rds_cluster.default.engine
+  engine_version          = aws_rds_cluster.default.engine_version
+  publicly_accessible     = false
+  db_subnet_group_name    = var.private_subnet_group_name
+  availability_zone       = data.aws_availability_zones.az.names[0]
+}
 
 
 
