@@ -27,13 +27,15 @@ resource "aws_iam_policy" "read_db_secret" {
   })
 }
 
-
+data "aws_availability_zones" "az" {
+  state = "available"
+}
 
 resource "aws_rds_cluster" "default" {
   cluster_identifier      = "aurora-cluster-test"
   engine                  = "aurora-mysql"
   engine_version          = "8.0.mysql_aurora.3.04.0"
-  availability_zones      = ["ap-south-1a"]
+  availability_zones      = [data.aws_availability_zones.az.names]
   database_name           = "mydb"
   master_username         = local.db_secret.username
   master_password         = local.db_secret.password
