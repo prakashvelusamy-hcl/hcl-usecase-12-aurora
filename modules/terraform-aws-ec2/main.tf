@@ -32,7 +32,8 @@ resource "aws_instance" "public_instances" {
   instance_type               = "t3.micro"
   subnet_id                   = var.public_subnet_ids[count.index]
   associate_public_ip_address = true
-  security_groups = [aws_security_group.ec2_sg.id]
+  security_groups             = [aws_security_group.ec2_sg.id]
+  volume_type                 = "gp3"
 
   # user_data = <<-EOF
   #             #!/bin/bash
