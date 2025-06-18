@@ -31,6 +31,26 @@ data "aws_availability_zones" "az" {
   state = "available"
 }
 
+resource "aws_security_group" "db_sg" {
+  name        = "Aurora DB Security Group"
+  description = "Allow 3306 port"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_rds_cluster" "default" {
   cluster_identifier      = "aurora-cluster-test"
   engine                  = "aurora-mysql"
@@ -40,7 +60,7 @@ resource "aws_rds_cluster" "default" {
   master_username         = local.db_secret.username
   master_password         = local.db_secret.password
   backup_retention_period = 5
-  vpc_security_group_ids = var.vpc_security_group_id
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
   db_subnet_group_name   = var.private_subnet_group_name
   skip_final_snapshot    = true
 }
