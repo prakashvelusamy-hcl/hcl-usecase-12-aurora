@@ -8,7 +8,7 @@ module "vpc" {
   environment    = var.environment
 }
 module "iam_instance-profile" {
-  source = "./module/terraform-aws-instance-profile"
+  source = "./modules/terraform-aws-instance-profile"
 }
 module "ec2" {
   source                    = "./modules/terraform-aws-ec2"
