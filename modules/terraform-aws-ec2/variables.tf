@@ -14,7 +14,7 @@ variable "iam_instance_profile_name" {
   description = "The iam_instance_profile_name for accessing the secret"
   type = string
 }
-variable "db_security_group_id" {
-  description  = "The Aurora SG ID"
-  type = string
-}
+# variable "db_security_group_id" {
+#   description  = "The Aurora SG ID"
+#   type = string
+# }
