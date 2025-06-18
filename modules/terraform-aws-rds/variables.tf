@@ -8,6 +8,9 @@ variable "vpc_security_group_id" {
 }
 variable "vpc_id" {
   type = string
-  description = "The vpc Id"
-  
+  description = "The vpc Id" 
+}
+variable "ec2_security_group_id" {
+  description  = "The EC2 SG ID"
+  type = string
 }

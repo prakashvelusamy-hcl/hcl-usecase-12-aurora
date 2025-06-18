@@ -42,6 +42,13 @@ resource "aws_security_group" "db_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+   ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [var.ec2_security_group_id]
+    description     = "Allow inbound from ec2"
+  }
 
   egress {
     from_port   = 0
