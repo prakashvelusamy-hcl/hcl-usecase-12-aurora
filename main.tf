@@ -7,7 +7,7 @@ module "vpc" {
   nat_count      = var.nat_count
   environment    = var.environment
 }
-module "iam_instance-profile" {
+module "iam_instance_profile" {
   source = "./modules/terraform-aws-instance-profile"
 }
 module "ec2" {
