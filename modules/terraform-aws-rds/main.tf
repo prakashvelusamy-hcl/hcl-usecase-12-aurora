@@ -1,5 +1,5 @@
 data "aws_secretsmanager_secret" "db" {
-  arn = "arn:aws:secretsmanager:ap-south-1:495599733393:secret:MyDBSecret-XSqocm"
+  arn = "arn:aws:secretsmanager:ap-south-1:495599733393:secret:PrakashMyDBSecret-71ek01"
 }
 
 data "aws_secretsmanager_secret_version" "db_version" {
