@@ -7,11 +7,15 @@ module "vpc" {
   nat_count      = var.nat_count
   environment    = var.environment
 }
+module "iam_instance-profile" {
+  source = "./module/terraform-aws-instance-profile"
+}
 module "ec2" {
-  source            = "./modules/terraform-aws-ec2"
-  public_instance   = var.public_instance
-  public_subnet_ids = module.vpc.public_subnet_ids
-  vpc_id            = module.vpc.vpc_id
+  source                    = "./modules/terraform-aws-ec2"
+  public_instance           = var.public_instance
+  public_subnet_ids         = module.vpc.public_subnet_ids
+  vpc_id                    = module.vpc.vpc_id
+  iam_instance_profile_name = module.iam_instance_profile.iam_instance_profile_name
 }
 
 module "rds" {
@@ -22,3 +26,4 @@ module "rds" {
 # module "secrets" {
 #   source                    = "./modules/terraform-aws-secrets"
 # }
+

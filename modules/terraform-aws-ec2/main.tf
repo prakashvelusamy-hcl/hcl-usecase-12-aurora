@@ -1,44 +1,4 @@
-resource "aws_iam_role" "ec2_role" {
-  name = "ec2-secrets-access-role"
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-resource "aws_iam_policy" "ec2_secrets_policy" {
-  name        = "ec2-secrets-access-policy"
-  description = "Allows EC2 instance to read Secrets Manager secrets"
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "secretsmanager:GetSecretValue",
-          "secretsmanager:DescribeSecret"
-        ],
-        Resource = "arn:aws:secretsmanager:ap-south-1:495599733393:secret:PrakashMyDBSecret-71ek01"
-      }
-    ]
-  })
-}
-resource "aws_iam_role_policy_attachment" "attach_secrets_policy" {
-  role       = aws_iam_role.ec2_role.name
-  policy_arn = aws_iam_policy.ec2_secrets_policy.arn
-}
-
-resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "ec2-instance-profile"
-  role = aws_iam_role.ec2_role.name
-}
 
 
 
@@ -83,17 +43,15 @@ resource "aws_instance" "public_instances" {
     volume_type = "gp3"
     delete_on_termination = true
   }
- iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
-
-  # user_data = <<-EOF
-  #             #!/bin/bash
-  #             apt-get update -y
-  #             apt-get install -y nginx
-  #             systemctl start nginx
-  #             systemctl enable nginx
-  #             echo "<h1>Hostname: $(hostname)</h1>" > /var/www/html/index.html
-  #             systemctl reload nginx
-  #             EOF
+ iam_instance_profile = var.iam_instance_profile_name
+   user_data = <<-EOF
+               #!/bin/bash
+                sudo apt-get update -y
+                sudo apt install unzip
+                sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                sudo unzip awscliv2.zip
+                sudo ./aws/install
+                EOF
 
   tags = {
     Name = "Public-Instance-Prakash"

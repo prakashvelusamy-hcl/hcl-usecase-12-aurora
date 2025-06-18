@@ -10,3 +10,7 @@ variable "vpc_id" {
   description = "VPC ID to use for EC2 instances and security groups"
   type        = string
 }
+variable "iam_instance_profile_name" {
+  description = "The iam_instance_profile_name for accessing the secret"
+  type = string
+}
