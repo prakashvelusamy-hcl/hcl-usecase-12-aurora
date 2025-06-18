@@ -10,6 +10,22 @@ locals {
   db_secret = jsondecode(data.aws_secretsmanager_secret_version.db_version.secret_string)
 }
 
+resource "aws_iam_policy" "read_db_secret" {
+  name        = "ReadDBSecretPolicy"
+  description = "Policy to allow read access to Aurora DB secret"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ],
+        Effect   = "Allow",
+        Resource = data.aws_secretsmanager_secret.db.arn
+      }
+    ]
+  })
+}
 
 
 
