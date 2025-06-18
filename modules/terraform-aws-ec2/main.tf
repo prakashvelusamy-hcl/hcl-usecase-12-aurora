@@ -34,7 +34,7 @@ resource "aws_instance" "public_instances" {
   associate_public_ip_address = true
   security_groups             = [aws_security_group.ec2_sg.id]
   
-  block_device {
+  root_block_device {
     device_name = "/dev/sda1"
     volume_size = 8
     volume_type = "gp3"
