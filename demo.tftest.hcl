@@ -3,7 +3,7 @@ run "test_ec2_instance_creation" {
 
   # Check if the EC2 instance ID is not empty (meaning it was created)
   assert {
-    condition     = length(module.ec2.public_subnet_ids) > 0
+    condition     = length(module.ec2.public_instance_ids) > 0
     error_message = "No EC2 instances were created"
   }
 
