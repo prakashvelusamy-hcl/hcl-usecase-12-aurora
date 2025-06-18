@@ -34,7 +34,7 @@ resource "aws_security_group" "ec2_sg" {
 #     security_groups = [var.db_security_group_id]
 #     description     = "Allow outbound MySQL traffic to DB SG"
 #   }
-# }
+ }
 
 
 resource "aws_instance" "public_instances" {
