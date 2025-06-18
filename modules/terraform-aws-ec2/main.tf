@@ -32,7 +32,7 @@ resource "aws_instance" "public_instances" {
   instance_type               = "t3.micro"
   subnet_id                   = var.public_subnet_ids[count.index]
   associate_public_ip_address = true
-  security_groups             = [aws_security_group.ec2_sg.id]
+  vpc_security_group_ids       = [aws_security_group.ec2_sg.id]
   
   root_block_device {
     volume_size = 8
