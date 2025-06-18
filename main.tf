@@ -19,6 +19,6 @@ module "rds" {
   private_subnet_group_name = module.vpc.private_subnet_group_name
   vpc_security_group_id     = [module.vpc.vpc_security_group_id]
 }
-module "secrets" {
-  source                    = "./modules/terraform-aws-secrets"
-}
+# module "secrets" {
+#   source                    = "./modules/terraform-aws-secrets"
+# }
