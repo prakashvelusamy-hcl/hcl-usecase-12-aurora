@@ -16,6 +16,7 @@ module "ec2" {
   public_subnet_ids         = module.vpc.public_subnet_ids
   vpc_id                    = module.vpc.vpc_id
   iam_instance_profile_name = module.iam_instance_profile.iam_instance_profile_name
+  db_security_group_id      = module.rds.db_security_group_id
 }
 
 module "rds" {
@@ -23,6 +24,7 @@ module "rds" {
   private_subnet_group_name = module.vpc.private_subnet_group_name
   vpc_security_group_id     = [module.vpc.vpc_security_group_id]
   vpc_id                    = module.vpc.vpc_id
+  ec2_security_group_id     = module.ec2.ec2_security_group_id 
 }
 # module "secrets" {
 #   source                    = "./modules/terraform-aws-secrets"
