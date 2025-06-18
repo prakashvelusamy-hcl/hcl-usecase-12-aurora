@@ -47,7 +47,7 @@ resource "aws_rds_cluster" "default" {
 resource "aws_rds_cluster_instance" "writer" {
   identifier              = "aurora-cluster-writer-instance-1"
   cluster_identifier      = aws_rds_cluster.default.id
-  instance_class          = "db.t2.medium"
+  instance_class          = "db.t3.medium"
   engine                  = aws_rds_cluster.default.engine
   engine_version          = aws_rds_cluster.default.engine_version
   publicly_accessible     = false
