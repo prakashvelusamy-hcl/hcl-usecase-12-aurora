@@ -40,6 +40,7 @@ resource "aws_rds_cluster" "default" {
   backup_retention_period = 5
   vpc_security_group_ids = var.vpc_security_group_id
   db_subnet_group_name   = var.private_subnet_group_name
+  skip_final_snapshot    = true
 
 }
 
