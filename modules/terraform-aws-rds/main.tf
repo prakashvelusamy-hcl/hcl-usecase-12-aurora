@@ -57,6 +57,22 @@ resource "aws_rds_cluster_instance" "writer" {
 
 
 
+
+# resource "aws_rds_cluster_instance" "reader" {
+#   count                   = 1 
+#   identifier              = "aurora-cluster-test-instance-reader-${count.index + 1}"
+#   cluster_identifier      = aws_rds_cluster.default.id
+#   instance_class          = "db.t3.medium"
+#   engine                  = aws_rds_cluster.default.engine
+#   engine_version          = aws_rds_cluster.default.engine_version
+#   publicly_accessible     = false
+#   db_subnet_group_name    = var.private_subnet_group_name
+#   availability_zone       = data.aws_availability_zones.az.names[count.index + 1]
+# }
+
+
+
+
 # resource "aws_secretsmanager_secret" "db_credentials" {
 #   name = "aurora-db-credentials"
 # }
