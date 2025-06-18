@@ -39,6 +39,7 @@ resource "aws_instance" "public_instances" {
     volume_size = 8
     volume_type = "gp3"
     delete_on_termination = true
+  }
  
 
   # user_data = <<-EOF
