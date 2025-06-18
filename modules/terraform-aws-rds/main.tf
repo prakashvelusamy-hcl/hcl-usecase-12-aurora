@@ -53,7 +53,6 @@ resource "aws_rds_cluster_instance" "writer" {
   publicly_accessible     = false
   db_subnet_group_name    = var.private_subnet_group_name
   availability_zone       = data.aws_availability_zones.az.names[0]
-  vpc_security_group_ids = var.vpc_security_group_id
 }
 
 
