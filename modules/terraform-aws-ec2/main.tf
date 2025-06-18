@@ -33,7 +33,13 @@ resource "aws_instance" "public_instances" {
   subnet_id                   = var.public_subnet_ids[count.index]
   associate_public_ip_address = true
   security_groups             = [aws_security_group.ec2_sg.id]
-  volume_type                 = "gp3"
+  
+  block_device {
+    device_name = "/dev/sda1"
+    volume_size = 8
+    volume_type = "gp3"
+    delete_on_termination = true
+ 
 
   # user_data = <<-EOF
   #             #!/bin/bash
